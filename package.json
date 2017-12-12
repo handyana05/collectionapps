@@ -1,0 +1,31 @@
+{
+  "name": "collectionapps",
+  "version": "1.0.0",
+  "description": "Collection of My Apps",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/handyana05/collectionapps.git"
+  },
+  "keywords": [
+    "Collection",
+    "Apps"
+  ],
+  "author": "Handyana Sumitra Atmaja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/handyana05/collectionapps/issues"
+  },
+  "homepage": "https://github.com/handyana05/collectionapps#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.7"
+  }
+}
