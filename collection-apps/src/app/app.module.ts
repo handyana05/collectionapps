@@ -6,11 +6,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
-import { LoginRegisterComponent } from './login-register/login-register.component';
+import { AuthGuard } from './core/guards/auth.guard';
 import { AppRoutingModule } from './app-routing.module';
+import { UserService } from './core/services/user/user.service';
+
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 
 @NgModule({
@@ -29,9 +33,13 @@ import { AppRoutingModule } from './app-routing.module';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

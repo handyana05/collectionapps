@@ -1,4 +1,5 @@
 var express = require('express');
+var expressValidator = require('express-validator');
 var http = require('http');
 var debug = require('debug')('myapps:server');
 var bodyParser = require('body-parser');
@@ -23,19 +24,37 @@ app.set('port', port);
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
+// Validator
+app.use(expressValidator({
+    errorFormatter: (param, msg, value) => {
+        var namespace = param.split('.')
+            , root    = namespace.shift()
+            , formParam = root;
+
+        while(namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg   : msg,
+            value : value
+        };
+    }
+}));
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/assets', express.static(__dirname + '/public'));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

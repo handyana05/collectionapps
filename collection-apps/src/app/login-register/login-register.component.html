@@ -1,78 +1,107 @@
 <div id="loginRegisterContainer" class="container">
   <div class="row">
-    <div class="col-md-6 offset-3">
-      <mat-tab-group>
+    <div id="loginRegisterWelcomeText" class="col-md-8 p-5">
+      <h3>Hello</h3>
+      <h2>World.</h2>
+      <p>Welcome to ATMAJA Fams - applications site.</p>
+      <blockquote>
+        <code>while( !( succeed = try() ) );</code>
+      </blockquote>
+    </div>
+    <div id="loginRegisterForms" class="col-md-4">
+      <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
         <!-- Login Tab -->
-        <mat-tab label="Login">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span style="font-weight: bold; font-size: 1.15rem;">Login</span>
+          </ng-template>
           <form [formGroup]="loginForm" (ngSubmit)="login()" style="margin: 3rem 1rem;">
             <mat-form-field class="w-100">
-              <input matInput placeholder="Username" formControlName="username" [formGroup]="loginForm" [errorStateMatcher]="matcher">
+              <input matInput placeholder="Username" formControlName="username" [formGroup]="loginForm" [(ngModel)]="loginModel.username" [errorStateMatcher]="matcher">
               <mat-error *ngIf="loginForm.controls.username.hasError('required')">
                 Username is <strong>required</strong>
               </mat-error>
             </mat-form-field>
             <mat-form-field class="w-100">
-              <input matInput type="password" placeholder="Password" formControlName="password" [formGroup]="loginForm" [errorStateMatcher]="matcher">
+              <input matInput type="password" placeholder="Password" formControlName="password" [formGroup]="loginForm" [(ngModel)]="loginModel.password" [errorStateMatcher]="matcher">
               <mat-error *ngIf="loginForm.controls.password.hasError('required')">
                 Password is <strong>required</strong>
               </mat-error>
             </mat-form-field>
+            <p>
+              <small>Don't have an account yet? <span style="color: rgb(64, 100, 100); cursor: pointer;" (click)="switchToRegister()">Register</span></small>
+            </p>
             <button type="submit" class="btn btn-primary">Login</button>
             <button type="button" class="btn btn-light ml-2" (click)="loginFormReset()">Reset</button>
           </form>
         </mat-tab>
 
         <!-- Register Tab -->
-        <mat-tab label="Register">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span style="font-weight: bold; font-size: 1.15rem;">Register</span>
+          </ng-template>
           <form [formGroup]="registerForm" (ngSubmit)="register()" style="margin: 3rem 1rem;">
             <mat-form-field class="form-group w-100">
-              <input matInput placeholder="First Name" formControlName="firstName" [formGroup]="registerForm" [errorStateMatcher]="matcher">
-              <mat-error *ngIf="registerForm.controls.firstName.hasError('minlength') && !registerForm.controls.firstName.hasError('required')">
+              <input matInput placeholder="First Name" formControlName="firstname" [formGroup]="registerForm" [(ngModel)]="registerModel.firstname" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="registerForm.controls.firstname.hasError('minlength') && !registerForm.controls.firstname.hasError('required')">
                 Minimal length of 2 chars
               </mat-error>
-              <mat-error *ngIf="registerForm.controls.firstName.hasError('required')">
+              <mat-error *ngIf="registerForm.controls.firstname.hasError('required')">
                 First name is <strong>required</strong>
               </mat-error>
+              <mat-error *ngIf="registerForm.controls.firstname.hasError('Server')">
+                {{ registerForm.controls.firstname.errors['Server'] }}
+              </mat-error>
             </mat-form-field>
             <mat-form-field class="form-group w-100">
-              <input matInput placeholder="Last Name" formControlName="lastName" [formGroup]="registerForm" [errorStateMatcher]="matcher">
-              <mat-error *ngIf="registerForm.controls.lastName.hasError('minlength') && !registerForm.controls.lastName.hasError('required')">
+              <input matInput placeholder="Last Name" formControlName="lastname" [formGroup]="registerForm" [(ngModel)]="registerModel.lastname" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="registerForm.controls.lastname.hasError('minlength') && !registerForm.controls.lastname.hasError('required')">
                 Minimal length of 2 chars
               </mat-error>
-              <mat-error *ngIf="registerForm.controls.lastName.hasError('required')">
+              <mat-error *ngIf="registerForm.controls.lastname.hasError('required')">
                 Last name is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls.lastname.hasError('Server')">
+                {{ registerForm.controls.lastname.errors['Server'] }}
               </mat-error>
             </mat-form-field>
             <mat-form-field class="form-group w-100">
-              <input matInput placeholder="Username" formControlName="username" [formGroup]="registerForm" [errorStateMatcher]="matcher">
+              <input matInput placeholder="Username" formControlName="username" [formGroup]="registerForm" [(ngModel)]="registerModel.username" [errorStateMatcher]="matcher">
               <mat-error *ngIf="registerForm.controls.username.hasError('minlength') && !registerForm.controls.username.hasError('required')">
                 Minimal length of 2 chars
               </mat-error>
               <mat-error *ngIf="registerForm.controls.username.hasError('required')">
                 Username is <strong>required</strong>
               </mat-error>
+              <mat-error *ngIf="registerForm.controls.username.hasError('Server')">
+                {{ registerForm.controls.username.errors['Server'] }}
+              </mat-error>
             </mat-form-field>
             <mat-form-field class="w-100">
-              <input matInput placeholder="Email" formControlName="email" [formGroup]="registerForm" [errorStateMatcher]="matcher">
+              <input matInput placeholder="Email" formControlName="email" [formGroup]="registerForm" [(ngModel)]="registerModel.email" [errorStateMatcher]="matcher">
               <mat-error *ngIf="registerForm.controls.email.hasError('email') && !registerForm.controls.email.hasError('required')">
                 Please enter a valid email address
               </mat-error>
               <mat-error *ngIf="registerForm.controls.email.hasError('required')">
                 Email is <strong>required</strong>
               </mat-error>
+              <mat-error *ngIf="registerForm.controls.email.hasError('Server')">
+                {{ registerForm.controls.email.errors['Server'] }}
+              </mat-error>
             </mat-form-field>
             <mat-form-field class="form-group w-100">
-              <input matInput type="password" id="registerPassword" placeholder="Password" formControlName="password" [formGroup]="registerForm" [errorStateMatcher]="matcher">
+              <input matInput type="password" id="registerPassword" placeholder="Password" formControlName="password" [formGroup]="registerForm" [(ngModel)]="registerModel.password" [errorStateMatcher]="matcher">
               <mat-error *ngIf="registerForm.controls.password.hasError('required')">
                 Password is <strong>required</strong>
               </mat-error>
             </mat-form-field>
             <mat-form-field class="form-group w-100">
-              <input matInput type="password" id="registerPasswordConfirm" placeholder="Password Confirm" formControlName="passwordConfirm" [formGroup]="registerForm" [errorStateMatcher]="matcher">
-              <mat-error *ngIf="registerForm.controls.passwordConfirm.hasError('MatchPassword') && !registerForm.controls.passwordConfirm.hasError('required')">
+              <input matInput type="password" id="registerPasswordConfirm" placeholder="Password Confirm" formControlName="passwordconfirm" [formGroup]="registerForm" [(ngModel)]="registerModel.passwordconfirm" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="registerForm.controls.passwordconfirm.hasError('MatchPassword') && !registerForm.controls.passwordconfirm.hasError('required')">
                 Password not match
               </mat-error>
-              <mat-error *ngIf="registerForm.controls.passwordConfirm.hasError('required')">
+              <mat-error *ngIf="registerForm.controls.passwordconfirm.hasError('required')">
                 Password confirm is <strong>required</strong>
               </mat-error>
             </mat-form-field>

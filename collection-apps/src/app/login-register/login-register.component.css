@@ -1,0 +1,62 @@
+#loginRegisterContainer {
+  min-height: 50rem;
+  display: flex;
+}
+
+#loginRegisterContainer .row {
+  flex: 1 1 100%;
+  background-color: rgba(64, 100, 100, 0.6);
+  box-shadow: .25rem .25rem 1rem rgb(64, 100, 100);
+}
+
+#loginRegisterForms {
+  background-color: #ffffff;
+}
+
+#loginRegisterWelcomeText h2,
+#loginRegisterWelcomeText h3 {
+  color: #ffffff;
+}
+
+#loginRegisterWelcomeText h2 {
+  font-size: 5rem;
+}
+
+#loginRegisterWelcomeText h3 {
+  font-size: 3.5rem;
+  margin-bottom: -1.5rem;
+}
+
+#loginRegisterContainer blockquote {
+  position: relative;
+  padding: 2rem;
+  font-style: italic;
+  font-weight: bold;
+  margin-top: 6rem;
+  line-height: 7rem;
+  text-align: center;
+  color: #ffffff;
+}
+
+#loginRegisterContainer blockquote::before {
+  content: "\201C";
+  font-size: 5rem;
+  display: block;
+  position: absolute;
+  left: 0;
+}
+
+#loginRegisterContainer blockquote::after {
+  content: "\201D";
+  font-size: 5rem;
+  display: block;
+  position: absolute;
+  right: 0;
+  margin-top: -3rem;
+}
+
+#loginRegisterContainer blockquote code {
+  background-color: transparent;
+  color: inherit;
+  font-size: 1.5rem;
+}

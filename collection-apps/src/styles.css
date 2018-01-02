@@ -1,2 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-image: url('/assets/images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center top;
+}
