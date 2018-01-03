@@ -10,44 +10,42 @@ var getServerSalt = (userId, callback) => {
 };
 
 var loginUser = (res, user, candidatePassword) => {
-    if(!user.block) {
-        getServerSalt(user._id, (err, usersalt) => {
-            if(err) {
-                res.send(JSON.stringify({ errors: err }));
-            }
-            else {
-                var password = candidatePassword + usersalt.salt;
-                bcrypt.compare(password, user.password, (bcryptErr, isMatch) => {
-                    if(bcryptErr) {
-                        res.send(JSON.stringify({ success: false, message: 'Error on finding the user (3).' }));
+    getServerSalt(user._id, (err, usersalt) => {
+        if(err) {
+            res.send(JSON.stringify({ errors: err }));
+        }
+        else {
+            var password = candidatePassword + usersalt.salt;
+            bcrypt.compare(password, user.password, (bcryptErr, isMatch) => {
+                if(bcryptErr) {
+                    res.send(JSON.stringify({ success: false, message: 'Error on finding the user (3).' }));
+                }
+                else {
+                    if(isMatch) {
+                        User.findByIdAndUpdate(user._id, { $set: { lastlogin: Date.now() } }, (updateUserErr, updatedUser) => {
+                            if(updateUserErr) {
+                                res.send(JSON.stringify({ success: false, message: 'Error on finding the user (4).' }));
+                            }
+                            else{
+                                res.send(JSON.stringify({ success: true, message: 'The user is successfully logged in.', user: {
+                                    username: updatedUser.username,
+                                    firstname: updatedUser.firstname,
+                                    lastname: updatedUser.lastname,
+                                    email: updatedUser.email
+                                }}));
+                            }
+                        });
                     }
                     else {
-                        if(isMatch) {
-                            res.send(JSON.stringify({ success: true, message: 'The user is successfully logged in.', user: {
-                                username: user.username,
-                                firstname: user.firstname,
-                                lastname: user.lastname,
-                                email: user.email
-                            }}))
-                        }
-                        else {
-                            res.send(JSON.stringify({ errors: [
-                                { param: 'username', msg: 'Invalid username or password.' },
-                                { param: 'password', msg: 'Invalid username or password.' }
-                            ]}));
-
-                            //TODO: Add mechanism to block the user after 3rd try
-                        }
+                        res.send(JSON.stringify({ errors: [
+                            { param: 'username', msg: 'Invalid username or password.' },
+                            { param: 'password', msg: 'Invalid username or password.' }
+                        ]}));
                     }
-                });
-            }
-        });
-    }
-    else {
-        res.send(JSON.stringify({ errors: [
-            { param: 'username', msg: 'This username is blocked, please contact the admin to unblock the user!' }
-        ]}));
-    }
+                }
+            });
+        }
+    });
 };
 
 module.exports = {
@@ -88,7 +86,7 @@ module.exports = {
                                 email: req.body.email,
                                 username: req.body.username,
                                 password: req.body.password,
-                                block: false
+                                registerdate: Date.now()
                             });
 
                             bcrypt.genSalt(10, function(serverSaltError, serverSalt) {

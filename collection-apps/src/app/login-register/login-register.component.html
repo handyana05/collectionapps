@@ -97,7 +97,7 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field class="form-group w-100">
-              <input matInput type="password" id="registerPasswordConfirm" placeholder="Password Confirm" formControlName="passwordconfirm" [formGroup]="registerForm" [(ngModel)]="registerModel.passwordconfirm" [errorStateMatcher]="matcher">
+              <input matInput type="password" id="registerPasswordConfirm" placeholder="Password Confirm" formControlName="passwordconfirm" [formGroup]="registerForm" [errorStateMatcher]="matcher">
               <mat-error *ngIf="registerForm.controls.passwordconfirm.hasError('MatchPassword') && !registerForm.controls.passwordconfirm.hasError('required')">
                 Password not match
               </mat-error>

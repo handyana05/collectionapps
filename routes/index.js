@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 var wishlist = {
     setupController: require('../controllers/wishlist/setupController'),
@@ -9,6 +10,8 @@ var wishlist = {
 /* GET home page. */
 router.get('/', function(req, res, next) {
     //res.render('index', { title: 'Express' });
+    console.log('Test');
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 /* API Route */

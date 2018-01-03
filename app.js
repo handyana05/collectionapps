@@ -42,6 +42,8 @@ app.use(expressValidator({
     }
 }));
 
+app.use(express.static(__dirname + '/public'));
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/assets', express.static(__dirname + '/public'));
