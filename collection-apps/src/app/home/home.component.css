@@ -1,0 +1,10 @@
+#homeCardContainer {
+  min-height: 50rem;
+  display: flex;
+}
+
+#homeCardContainer .row {
+  flex: 1 1 100%;
+  background-color: rgba(64, 100, 100, 0.6);
+  box-shadow: .25rem .25rem 1rem rgb(64, 100, 100);
+}

@@ -15,12 +15,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserService } from './core/services/user/user.service';
 
 import { LoginRegisterComponent } from './login-register/login-register.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginRegisterComponent
+    LoginRegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
